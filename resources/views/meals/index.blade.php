@@ -22,9 +22,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($meals as $meal)
+                @foreach ($meals as $kay => $meal)
                     <tr>
-                        <th scope="row">{{ $meal->id }}</th>
+                        <th scope="row">{{ $kay + 1 }}</th>
                         <td><a href="{{ route('meals.show', $meal->id) }}">{{ $meal->name }}</a></td>
                         <td>{{ $meal->description }}</td>
                         <td>{{ $meal->price }}</td>
@@ -46,6 +46,9 @@
 
             </tbody>
         </table>
+
     </div>
+    {{ $meals->links() }}
+
 
 @endsection

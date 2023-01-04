@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Meal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class MenuController extends Controller
 {
@@ -12,10 +14,14 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
-        return view('front.menu',compact('categories'));
+        $category = Category::all();
+        // $meal = Meal::all();
+        $meal = Meal::when($request->category_id, function ($query, $value) {
+            $query->where('category_id', $value);
+        })->get();
+        return view('front.menu', compact('category', 'meal'));
     }
 
     /**

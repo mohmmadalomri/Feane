@@ -17,11 +17,11 @@ class MealController extends Controller
      */
     public function index()
     {
-        $meals = Meal::all();
+        $meals = Meal::paginate(5);
         $categories = Category::all();
-        $meals = Meal::leftJoin('categories', 'categories.id', '=', 'meals.category_id')
+        $category = Meal::leftJoin('categories', 'categories.id', '=', 'meals.category_id')
             ->select('meals.*', 'categories.name as category.name')->get();
-        return view('meals.index', compact('meals'));
+        return view('meals.index', compact('meals','category','categories'));
     }
 
     /**
